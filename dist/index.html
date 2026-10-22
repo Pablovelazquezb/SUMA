@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123829">
+  <meta name="description" content="SUMA · Plataforma líder de voluntariado e impacto social. Conecta con causas ambientales, comunitarias y educativas cerca de ti o en el mundo con acreditación oficial y seguro incluido.">
+  <title>SUMA · Voluntariado & Impacto Social</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+  <!-- Top Announcement Bar -->
+  <aside class="announcement-bar" aria-label="Aviso de convocatoria">
+    <div class="announcement-content">
+      <span class="announcement-tag">CONVOCATORIA 2026</span>
+      <span class="announcement-text">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        Nuevas jornadas con acreditación de horas de servicio social y seguro de voluntario incluido.
+      </span>
+      <button class="announcement-link" type="button" id="open-faq-top">Más información <span aria-hidden="true">→</span></button>
+    </div>
+  </aside>
+
+  <!-- Global Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a class="brand" href="#explorar" aria-label="SUMA inicio">
+        <span class="brand-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="brand-icon"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </span>
+        <span class="brand-text">suma<span class="brand-dot">.</span></span>
+      </a>
+
+      <!-- Desktop & Mobile Navigation -->
+      <nav class="nav" id="main-nav" aria-label="Navegación principal">
+        <a href="#explorar" data-nav="explorar">
+          <span class="nav-icon" data-icon="compass"></span>
+          <span>Explorar</span>
+        </a>
+        <a href="#mapa" data-nav="mapa">
+          <span class="nav-icon" data-icon="map"></span>
+          <span>Mapa</span>
+        </a>
+        <a href="#guardados" data-nav="guardados">
+          <span class="nav-icon" data-icon="heart"></span>
+          <span>Guardados</span>
+          <span id="saved-count" class="badge-count" hidden>0</span>
+        </a>
+        <a href="#actividad" data-nav="actividad">
+          <span class="nav-icon" data-icon="user"></span>
+          <span>Mi Camino</span>
+          <span id="activity-badge" class="badge-dot" hidden></span>
+        </a>
+        <a href="#organizaciones" data-nav="organizaciones" class="nav-org-link">
+          <span class="nav-icon" data-icon="building"></span>
+          <span>Para ONGs</span>
+        </a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="icon-button" type="button" aria-label="Cambiar modo de color" title="Alternar tema claro/oscuro">
+          <span id="theme-icon" data-icon="moon"></span>
+        </button>
+
+        <!-- Volunteer Profile Pill -->
+        <button id="profile-pill-btn" class="profile-pill" type="button" aria-label="Mi perfil de voluntario">
+          <span class="profile-avatar" id="header-avatar">PV</span>
+          <span class="profile-name" id="header-volunteer-name">Voluntario</span>
+          <span class="profile-hours" id="header-hours-badge">0h</span>
+        </button>
+
+        <a class="button primary small-button" href="#organizaciones">Publicar Causa <span aria-hidden="true">+</span></a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="mobile-menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Application Container -->
+  <main id="main" class="shell" tabindex="-1">
+
+    <!-- 1. EXPLORAR VIEW -->
+    <section id="explore-view" data-view="explorar">
+      <!-- Hero Section -->
+      <div class="hero">
+        <div class="hero-copy">
+          <div class="hero-pill">
+            <span class="sparkle-icon">✦</span>
+            <span>PLATAFORMA LÍDER DE VOLUNTARIADO</span>
+          </div>
+          <h1>Donde tus ganas de ayudar se convierten en <em>impacto real.</em></h1>
+          <p class="hero-description">
+            Conecta con causas ambientales, sociales y educativas respaldadas por organizaciones verificadas en México, Latinoamérica y el mundo. Gana experiencia, haz comunidad y acredita tus horas de servicio.
+          </p>
+          <div class="hero-actions">
+            <a href="#search-form" class="button primary hero-cta">
+              <span data-icon="search"></span> Explorar Causas Disponibles
+            </a>
+            <button type="button" class="button secondary" id="btn-how-it-works">
+              <span data-icon="play"></span> ¿Cómo Funciona?
+            </button>
+          </div>
+          <div class="hero-trust-row">
+            <span class="trust-item"><span data-icon="check-circle"></span> Organizaciones 100% validadas</span>
+            <span class="trust-item"><span data-icon="shield"></span> Seguro de voluntario incluido</span>
+            <span class="trust-item"><span data-icon="award"></span> Constancia oficial universitaria</span>
+          </div>
+        </div>
+
+        <!-- Hero Featured Card -->
+        <div class="hero-featured" id="hero-featured-card">
+          <div class="hero-featured-badge">JORNADA DESTACADA DE LA SEMANA</div>
+          <div class="hero-featured-visual" id="hero-card-visual">
+            <!-- Dynamic SVG Art will be inserted by JS -->
+          </div>
+          <div class="hero-featured-body">
+            <div class="hero-featured-tags">
+              <span class="pill category-pill">Medio Ambiente</span>
+              <span class="pill spots-pill">Quedan 6 lugares</span>
+            </div>
+            <h3 id="hero-card-title">Reforestación y Restauración Ecológica en La Huasteca</h3>
+            <p class="hero-card-org"><span data-icon="check-circle" class="verified-icon"></span> Pronatura Noreste · Monterrey, NL</p>
+            <div class="hero-card-meta">
+              <span><span data-icon="calendar"></span> Este sábado · 08:30 h</span>
+              <span><span data-icon="clock"></span> 4 horas de servicio</span>
+            </div>
+            <div class="hero-card-footer">
+              <div class="volunteer-avatars">
+                <span class="avatar-bubble">🌱</span>
+                <span class="avatar-bubble">🌿</span>
+                <span class="avatar-bubble">🌳</span>
+                <span class="avatar-more">+14 ya inscritos</span>
+              </div>
+              <button class="button primary small-button" type="button" id="hero-card-cta">Ver y Sumarme →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Impact Stats Strip -->
+      <section class="impact-stats-strip" aria-label="Métricas de impacto de la comunidad">
+        <div class="stat-box">
+          <span class="stat-number" id="stat-hours">15,420+</span>
+          <span class="stat-label">Horas de impacto donadas</span>
+        </div>
+        <div class="stat-separator"></div>
+        <div class="stat-box">
+          <span class="stat-number" id="stat-orgs">128</span>
+          <span class="stat-label">Organizaciones verificadas</span>
+        </div>
+        <div class="stat-separator"></div>
+        <div class="stat-box">
+          <span class="stat-number" id="stat-volunteers">4,850+</span>
+          <span class="stat-label">Voluntarios activos</span>
+        </div>
+        <div class="stat-separator"></div>
+        <div class="stat-box">
+          <span class="stat-number" id="stat-satisfaction">99.2%</span>
+          <span class="stat-label">Experiencias evaluadas 5★</span>
+        </div>
+      </section>
+
+      <!-- Search & Filters Container -->
+      <div class="search-filter-section" id="search-section">
+        <form id="search-form" class="search-panel" role="search">
+          <label class="search-field search-text">
+            <span class="field-label">¿Qué causa te apasiona?</span>
+            <span class="input-wrap">
+              <span data-icon="search"></span>
+              <input id="query" type="search" placeholder="Busca por palabra clave: árboles, alimentos, animales, digital..." autocomplete="off">
+            </span>
+          </label>
+
+          <label class="search-field location-field">
+            <span class="field-label">Destino o Ciudad</span>
+            <span class="input-wrap">
+              <span data-icon="pin"></span>
+              <select id="city" aria-label="Seleccionar destino">
+                <option value="">Todos los destinos</option>
+                <optgroup label="México (Presencial)">
+                  <option value="Monterrey, NL">Monterrey, NL</option>
+                  <option value="San Pedro Garza García, NL">San Pedro Garza García, NL</option>
+                  <option value="Guadalupe, NL">Guadalupe, NL</option>
+                  <option value="Santa Catarina, NL">Santa Catarina, NL</option>
+                  <option value="Ciudad de México">Ciudad de México (CDMX)</option>
+                  <option value="Guadalajara, Jalisco">Guadalajara, Jalisco</option>
+                  <option value="Puebla, México">Puebla, México</option>
+                  <option value="Oaxaca, México">Oaxaca, México</option>
+                </optgroup>
+                <optgroup label="América Latina e Internacional">
+                  <option value="Cusco, Perú">Cusco, Perú</option>
+                  <option value="Quito, Ecuador">Quito, Ecuador</option>
+                  <option value="Lisboa, Portugal">Lisboa, Portugal</option>
+                  <option value="Madrid, España">Madrid, España</option>
+                </optgroup>
+                <optgroup label="Remoto">
+                  <option value="En línea">En línea (Global / Remoto)</option>
+                </optgroup>
+              </select>
+            </span>
+          </label>
+
+          <button class="button primary search-button" type="submit">
+            <span data-icon="search"></span> Buscar
+          </button>
+        </form>
+
+        <!-- Category Pills & View Switcher -->
+        <div class="category-toolbar">
+          <div class="categories" id="categories" role="group" aria-label="Filtrar por causa">
+            <!-- Rendered by JS -->
+          </div>
+
+          <div class="toolbar-right">
+            <!-- View Mode Switcher -->
+            <div class="view-switcher" role="radiogroup" aria-label="Modo de vista">
+              <button class="view-btn active" type="button" data-view-mode="grid" aria-pressed="true" title="Vista cuadrícula">
+                <span data-icon="grid"></span> Tarjetas
+              </button>
+              <button class="view-btn" type="button" data-view-mode="map" aria-pressed="false" title="Vista mapa">
+                <span data-icon="map"></span> Mapa
+              </button>
+              <button class="view-btn" type="button" data-view-mode="calendar" aria-pressed="false" title="Vista agenda de fechas">
+                <span data-icon="calendar"></span> Fechas
+              </button>
+            </div>
+
+            <button id="filter-toggle" class="button filter-button" type="button" aria-expanded="false" aria-controls="more-filters">
+              <span data-icon="sliders"></span>
+              <span>Filtros</span>
+              <span id="active-filters-count" class="badge-count" hidden>0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Expandable Advanced Filters Drawer -->
+        <div id="more-filters" class="more-filters" hidden>
+          <div class="filter-group">
+            <label for="duration">Duración estimada</label>
+            <select id="duration">
+              <option value="">Cualquier duración</option>
+              <option value="short">Jornada corta (1 a 3 horas)</option>
+              <option value="medium">Media jornada (4 a 5 horas)</option>
+              <option value="long">Jornada completa (6 horas o más)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="mode">Modalidad</label>
+            <select id="mode">
+              <option value="">Todas las modalidades</option>
+              <option value="Presencial">Presencial en comunidad</option>
+              <option value="En línea">100% En línea / Remoto</option>
+              <option value="Híbrido">Híbrido</option>
+            </select>
+          </div>
+
+          <div class="filter-group checkboxes-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="weekend">
+              <span>Solo fines de semana</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="social-service">
+              <span>Válido para Servicio Social Universitario</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="no-experience">
+              <span>No requiere experiencia previa</span>
+            </label>
+          </div>
+
+          <button class="text-button" id="clear-filters" type="button">
+            <span data-icon="rotate-ccw"></span> Limpiar todos los filtros
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Header & Sort Controls -->
+      <div class="results-header">
+        <div>
+          <span class="eyebrow-small">CAUSAS ACTIVAS</span>
+          <h2 id="results-heading">Oportunidades de Voluntariado</h2>
+          <p id="results-count" class="result-count" aria-live="polite">Cargando actividades...</p>
+        </div>
+
+        <div class="sort-control">
+          <label for="sort" class="sort-label">Ordenar por:</label>
+          <select id="sort" class="sort-select">
+            <option value="date">Fechas más próximas</option>
+            <option value="hours">Menor tiempo (horas)</option>
+            <option value="spots">Mayor disponibilidad de cupos</option>
+            <option value="impact">Mayor impacto comunitario</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- VIEW 1: Opportunity Grid -->
+      <div class="card-grid" id="opportunity-grid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- VIEW 2: Interactive Map View (Hidden by default, shown when view-mode is map) -->
+      <div id="map-view-container" class="map-view-container" hidden>
+        <div class="map-wrapper">
+          <div class="map-header">
+            <h3><span data-icon="pin"></span> Mapa Interactivo de Impacto</h3>
+            <p>Selecciona una ubicación para explorar las causas comunitarias activas en esa región.</p>
+          </div>
+          <div id="interactive-map" class="interactive-map-area">
+            <!-- Vector interactive map rendered by JS -->
+          </div>
+          <div id="map-preview-card" class="map-preview-card" hidden>
+            <!-- Map selected card preview -->
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: Interactive Calendar View (Hidden by default, shown when view-mode is calendar) -->
+      <div id="calendar-view-container" class="calendar-view-container" hidden>
+        <div class="calendar-wrapper">
+          <div class="calendar-header">
+            <h3><span data-icon="calendar"></span> Próximas Jornadas por Fecha</h3>
+            <p>Planifica tus fines de semana y suma horas de voluntariado de acuerdo a tu disponibilidad.</p>
+          </div>
+          <div id="calendar-events-list" class="calendar-events-list">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- How it Works Section -->
+      <section class="how-it-works-section" id="how-it-works">
+        <div class="section-title-center">
+          <span class="eyebrow-small">PROCESO SIMPLE Y TRANSPARENTE</span>
+          <h2>Cómo funciona SUMA</h2>
+          <p>En solo cuatro pasos puedes involucrarte en iniciativas que dejan huella real.</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-num">01</div>
+            <div class="step-icon"><span data-icon="search"></span></div>
+            <h3>Elige tu causa</h3>
+            <p>Filtra por tema (ambiente, educación, comunidad, animales), ciudad, horario y si deseas acreditar servicio social.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">02</div>
+            <div class="step-icon"><span data-icon="check-square"></span></div>
+            <h3>Postúlate al instante</h3>
+            <p>Sin trámites burocráticos. Completa tu perfil, indica tu disponibilidad y recibe tu pase digital de voluntario.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">03</div>
+            <div class="step-icon"><span data-icon="heart"></span></div>
+            <h3>Vive la experiencia</h3>
+            <p>Asiste a la jornada con tu seguro activo, conoce a otros voluntarios comprometidos y apoya a la comunidad con tus manos.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">04</div>
+            <div class="step-icon"><span data-icon="award"></span></div>
+            <h3>Certifica tus horas</h3>
+            <p>Al concluir, la organización valida tu asistencia y descargas tu certificado oficial con folio digital y código QR.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials / Community Stories -->
+      <section class="testimonials-section">
+        <div class="section-title-center">
+          <span class="eyebrow-small">HISTORIAS DE NUESTRA COMUNIDAD</span>
+          <h2>Personas que están sumando</h2>
+          <p>Descubre los testimonios de voluntarios que ya están transformando realidades.</p>
+        </div>
+        <div class="testimonials-grid">
+          <article class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">"Participar en la reforestación de La Huasteca fue una experiencia increíble. No solo plantamos más de 100 árboles nativos, sino que conocí a personas maravillosas y mi universidad me acreditó las horas sin ningún problema."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">MS</div>
+              <div>
+                <strong>Mariana Silva</strong>
+                <small>Voluntaria en Monterrey · 24 horas acreditadas</small>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">"El voluntariado de mentoría digital con adultos mayores me cambió la perspectiva. Es hermoso ver la emoción de una abuelita al aprender a hacer su primera videollamada para hablar con sus nietos."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">DG</div>
+              <div>
+                <strong>Diego González</strong>
+                <small>Voluntario Digital · 18 horas de mentoría</small>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">"Como refugio animal, SUMA nos permitió conectar con voluntarios comprometidos y responsables en San Pedro. Pudimos rehabilitar a 12 perritos rescatados y darles un nuevo hogar."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">CR</div>
+              <div>
+                <strong>Camila Rivas</strong>
+                <small>Coordinadora en Rescate Animal San Pedro</small>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Certificate Verification Box -->
+      <section class="cert-verify-banner" aria-labelledby="verify-heading">
+        <div class="cert-verify-copy">
+          <span class="eyebrow-small">VALIDACIÓN INSTITUCIONAL</span>
+          <h2 id="verify-heading">Validador de Certificados Oficiales SUMA</h2>
+          <p>Universidades, empleadores y organizaciones pueden comprobar la autenticidad y registro de cualquier constancia emitida en la plataforma ingresando su código de verificación.</p>
+        </div>
+        <form id="cert-verify-form" class="cert-verify-input-wrap">
+          <input id="verify-input" type="text" placeholder="Ej. SUMA-2026-9842" required autocomplete="off">
+          <button type="submit" class="button primary">Verificar Constancia</button>
+          <button type="button" id="demo-cert-btn" class="text-button">Ver certificado de ejemplo</button>
+        </form>
+      </section>
+
+      <!-- Organizations Banner CTA -->
+      <section class="organization-banner">
+        <div class="org-banner-copy">
+          <span class="eyebrow-small">PARA ASOCIACIONES Y COLECTIVOS</span>
+          <h2>¿Tienes una causa y necesitas manos dispuestas?</h2>
+          <p>Publica tus jornadas de voluntariado de forma gratuita. Conectamos tu organización con miles de personas comprometidas, gestionamos las inscripciones y emitimos constancias oficiales.</p>
+        </div>
+        <a class="button primary large-button" href="#organizaciones">Registrar mi Organización <span aria-hidden="true">→</span></a>
+      </section>
+    </section>
+
+    <!-- 2. MAPA VIEW (Full screen map) -->
+    <section id="map-view" data-view="mapa" hidden>
+      <div class="page-intro">
+        <span class="eyebrow-small">EXPLORACIÓN GEOGRÁFICA</span>
+        <h1>Mapa de Causas de Impacto</h1>
+        <p>Encuentra voluntariados activos en tu vecindario, en tu ciudad o en proyectos internacionales de intercambio social.</p>
+      </div>
+      <div class="full-map-container" id="full-map-wrapper">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- 3. GUARDADOS VIEW -->
+    <section id="saved-view" data-view="guardados" hidden>
+      <div class="page-intro">
+        <span class="eyebrow-small">TU LISTA DE INTERÉS</span>
+        <h1>Causas que te <em>mueven.</em></h1>
+        <p>Aquí tienes las experiencias que has guardado. Da el siguiente paso y postúlate a las fechas que mejor se adapten a tu agenda.</p>
+      </div>
+      <div class="saved-summary-card" id="saved-summary-card">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="card-grid" id="saved-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- 4. ACTIVIDAD VIEW (Mi Camino / Volunteer Dashboard) -->
+    <section id="activity-view" data-view="actividad" hidden>
+      <div class="volunteer-profile-banner">
+        <div class="profile-main-info">
+          <div class="volunteer-avatar-large" id="dash-avatar">PV</div>
+          <div class="volunteer-text-info">
+            <div class="volunteer-name-row">
+              <h1 id="dash-name">Pablo Velázquez</h1>
+              <span class="volunteer-level-badge" id="dash-level">Nivel: Guardián Comunitario</span>
+              <button class="text-button edit-profile-btn" id="open-edit-profile" type="button">Editar perfil</button>
+            </div>
+            <p id="dash-institution">Estudiante · Servicio Social Activo · Monterrey, NL</p>
+            <div class="badges-row" id="badges-container">
+              <span class="badge-tag" title="Insignia por unirte a SUMA">🌱 Semilla del Cambio</span>
+              <span class="badge-tag" title="Insignia por participar en causas ecológicas">🌿 Guardián Verde</span>
+              <span class="badge-tag" title="Insignia por constancia">⭐ Voluntario Confiable</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-stats-card">
+          <div class="profile-stat-item">
+            <strong id="dash-total-hours">12 h</strong>
+            <span>Horas Acumuladas</span>
+          </div>
+          <div class="profile-stat-item">
+            <strong id="dash-total-causes">3</strong>
+            <span>Causas Apoyadas</span>
+          </div>
+          <div class="profile-stat-item">
+            <strong id="dash-completed-missions">2</strong>
+            <span>Misiones Realizadas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Tabs -->
+      <div class="dashboard-tabs" role="tablist">
+        <button class="dash-tab active" role="tab" id="tab-applications" aria-selected="true" data-dash-tab="applications">
+          Mis Postulaciones Activas (<span id="dash-active-count">0</span>)
+        </button>
+        <button class="dash-tab" role="tab" id="tab-credential" aria-selected="false" data-dash-tab="credential">
+          Credencial Digital & Certificados
+        </button>
+      </div>
+
+      <!-- Tab Content: Applications -->
+      <div id="dash-tab-content-applications" class="dash-tab-panel">
+        <div id="activity-list" class="activity-list">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Tab Content: Digital Credential & Certificates -->
+      <div id="dash-tab-content-credential" class="dash-tab-panel" hidden>
+        <div class="credential-grid">
+          <!-- Official Digital ID Card -->
+          <div class="digital-id-card" id="digital-id-card">
+            <div class="id-card-header">
+              <div class="id-brand">
+                <span class="id-star">✳</span> SUMA <span>CREDENCIAL OFICIAL</span>
+              </div>
+              <span class="id-status-pill">ACTIVO 2026</span>
+            </div>
+            <div class="id-card-body">
+              <div class="id-avatar-box">
+                <div class="id-avatar-circle" id="id-avatar">PV</div>
+                <div class="id-qr-code" id="id-card-qr">
+                  <!-- QR SVG generated by JS -->
+                </div>
+              </div>
+              <div class="id-data">
+                <h3 id="id-volunteer-name">Pablo Velázquez Bremont</h3>
+                <p class="id-institution" id="id-volunteer-inst">Acreditación Comunitaria Universitaria</p>
+                <div class="id-meta-grid">
+                  <div>
+                    <small>FOLIO DE VOLUNTARIO</small>
+                    <strong id="id-folio">SUMA-VOL-2026-4821</strong>
+                  </div>
+                  <div>
+                    <small>HORAS ACREDITADAS</small>
+                    <strong id="id-hours-stat">12 HORAS</strong>
+                  </div>
+                  <div>
+                    <small>VIGENCIA</small>
+                    <strong>DICIEMBRE 2026</strong>
+                  </div>
+                  <div>
+                    <small>SEGURO MÉDICO</small>
+                    <strong class="text-green">PÓLIZA ACTIVA ✓</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="id-card-footer">
+              <span>Firma Digital Verificada · Secretaría de Acción Comunitaria SUMA</span>
+              <button class="button small-button primary" id="print-credential-btn" type="button">
+                <span data-icon="printer"></span> Imprimir Credencial
+              </button>
+            </div>
+          </div>
+
+          <!-- Certificate Generator Preview Box -->
+          <div class="certificate-preview-box">
+            <h3><span data-icon="award"></span> Constancia Oficial de Horas</h3>
+            <p>Genera y descarga tu constancia oficial con membrete institucional, horas desglosadas, sello digital y folio de verificación para tu universidad o currículum vitae.</p>
+            <div class="cert-mini-preview">
+              <div class="cert-mini-header">
+                <span class="cert-seal">🎖️</span>
+                <strong>CERTIFICADO DE SERVICIO SOCIAL Y VOLUNTARIADO</strong>
+              </div>
+              <p class="cert-mini-text">Se hace constar que <strong id="cert-preview-name">Pablo Velázquez</strong> ha cumplido satisfactoriamente las actividades de voluntariado en beneficio de la comunidad.</p>
+              <div class="cert-mini-footer">
+                <span>Folio: <code id="cert-preview-hash">SUMA-MX-2026-9842</code></span>
+                <span class="cert-badge-valid">Válido para Trámites</span>
+              </div>
+            </div>
+            <button class="button primary full" id="open-full-certificate-btn" type="button">
+              <span data-icon="file-text"></span> Ver y Descargar Certificado Completo (PDF/Imprimir)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ORGANIZACIONES VIEW -->
+    <section id="organization-view" data-view="organizaciones" hidden>
+      <div class="org-hero-panel">
+        <div class="org-hero-copy">
+          <span class="eyebrow-small">PORTAL DE ORGANIZACIONES Y ASOCIACIONES</span>
+          <h1>Multiplica el impacto de tu causa con voluntarios comprometidos.</h1>
+          <p>Publica convocatorias para tus proyectos, gestiona postulaciones en tiempo real, registra asistencia y emite constancias oficiales respaldadas por SUMA.</p>
+          <div class="org-hero-buttons">
+            <button id="open-publish" class="button primary" type="button">
+              <span data-icon="plus"></span> Publicar Nueva Oportunidad
+            </button>
+            <button class="button secondary" type="button" id="btn-org-benefits">
+              Ver beneficios para ONGs
+            </button>
+          </div>
+        </div>
+        <div class="org-stats-card">
+          <div class="org-stat-item">
+            <strong>+4,800</strong>
+            <span>Voluntarios listos para ayudar</span>
+          </div>
+          <div class="org-stat-item">
+            <strong>0%</strong>
+            <span>Costo por publicar y gestionar</span>
+          </div>
+          <div class="org-stat-item">
+            <strong>24h</strong>
+            <span>Promedio para cubrir cupos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Organization Benefits Grid -->
+      <div class="org-benefits">
+        <article class="benefit-box">
+          <span class="benefit-number">01</span>
+          <h3>Difusión Instantánea</h3>
+          <p>Tu actividad se muestra a miles de voluntarios filtrada por ubicación, causa e intereses afines.</p>
+        </article>
+        <article class="benefit-box">
+          <span class="benefit-number">02</span>
+          <h3>Gestión de Postulantes</h3>
+          <p>Revisa perfiles, comunícate directamente por WhatsApp y aprueba o gestiona a tus participantes fácilmente.</p>
+        </article>
+        <article class="benefit-box">
+          <span class="benefit-number">03</span>
+          <h3>Acreditación Oficial</h3>
+          <p>Al concluir la jornada, confirma la asistencia para emitir automáticamente los certificados oficiales con código QR.</p>
+        </article>
+      </div>
+
+      <!-- Published Activities Section -->
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow-small">PANEL DE CONTROL DE TU ORGANIZACIÓN</span>
+          <h2>Convocatorias Publicadas</h2>
+          <p>Gestiona los cupos y postulantes de tus actividades activas.</p>
+        </div>
+        <button id="open-publish-secondary" class="button primary small-button" type="button">
+          <span data-icon="plus"></span> Nueva Convocatoria
+        </button>
+      </div>
+
+      <div id="published-grid" class="card-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div class="footer-top shell">
+      <div class="footer-col-brand">
+        <a class="brand" href="#explorar">
+          <span class="brand-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="brand-icon"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </span>
+          <span class="brand-text">suma<span class="brand-dot">.</span></span>
+        </a>
+        <p class="footer-tagline">Conectando a personas apasionadas con causas que transforman comunidades y protegen nuestro planeta.</p>
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram" class="social-icon"><span data-icon="instagram"></span></a>
+          <a href="#" aria-label="LinkedIn" class="social-icon"><span data-icon="linkedin"></span></a>
+          <a href="#" aria-label="Twitter / X" class="social-icon"><span data-icon="twitter"></span></a>
+          <a href="https://github.com/Pablovelazquezb/SUMA.git" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" class="social-icon"><span data-icon="github"></span></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li><a href="#explorar">Todas las causas</a></li>
+          <li><a href="#mapa">Mapa de actividades</a></li>
+          <li><a href="#explorar" data-quick-category="Medio Ambiente">Medio Ambiente</a></li>
+          <li><a href="#explorar" data-quick-category="Educación y Mentoría">Educación</a></li>
+          <li><a href="#explorar" data-quick-category="Bienestar Animal">Bienestar Animal</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Voluntarios</h4>
+        <ul>
+          <li><a href="#actividad">Mi Camino y Horas</a></li>
+          <li><a href="#guardados">Actividades Guardadas</a></li>
+          <li><a href="#" id="footer-verify-link">Verificar Certificado</a></li>
+          <li><a href="#" id="footer-faq-link">Servicio Social Universitario</a></li>
+          <li><a href="#" id="footer-insurance-link">Seguro de Voluntario</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Organizaciones</h4>
+        <ul>
+          <li><a href="#organizaciones">Publicar una causa</a></li>
+          <li><a href="#organizaciones">Panel de gestión</a></li>
+          <li><a href="#" id="footer-org-guide">Guía de buenas prácticas</a></li>
+          <li><a href="#" id="footer-contact-link">Contacto y Alianzas</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col newsletter-col">
+        <h4>Boletín de Causas</h4>
+        <p>Recibe en tu correo las jornadas y voluntariados más destacados de cada semana.</p>
+        <form id="newsletter-form" class="newsletter-form">
+          <input type="email" placeholder="tu@correo.com" required aria-label="Correo para boletín">
+          <button type="submit" class="button primary small-button">Suscribirme</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom shell">
+      <p>© 2026 SUMA · Red de Voluntariado e Impacto Social. Todos los derechos reservados.</p>
+      <div class="footer-legal">
+        <a href="#" id="privacy-link">Aviso de Privacidad</a>
+        <a href="#" id="terms-link">Términos de Servicio</a>
+        <a href="#" id="safety-link">Seguridad y Protocolos</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALS & DIALOGS ==================== -->
+
+  <!-- 1. Detail Dialog (Rich Activity Sheet) -->
+  <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-title">
+    <button class="close-button" data-close="detail-dialog" aria-label="Cerrar detalle" type="button">×</button>
+    <div id="detail-content" class="dialog-scroll-body">
+      <!-- Injected by JS -->
+    </div>
+  </dialog>
+
+  <!-- 2. Application Modal (Multi-step Professional Application) -->
+  <dialog id="apply-dialog" class="form-dialog" aria-labelledby="apply-title">
+    <button class="close-button" data-close="apply-dialog" aria-label="Cerrar solicitud" type="button">×</button>
+    <div class="dialog-padding">
+      <div class="dialog-stepper">
+        <span class="pill soft" id="apply-badge">POSTULACIÓN DE VOLUNTARIADO</span>
+        <div class="stepper-bar"><div class="stepper-progress" id="apply-progress" style="width: 50%;"></div></div>
+      </div>
+      <h2 id="apply-title">Súmate a esta causa</h2>
+      <p id="apply-activity-name" class="dialog-subtitle"></p>
+
+      <form id="apply-form">
+        <!-- Step 1: Personal Info -->
+        <div class="form-step" id="apply-step-1">
+          <div class="form-columns">
+            <label>
+              Nombre completo
+              <input type="text" id="applicant-name" required placeholder="Ej. Ana Sofía Martínez" autocomplete="name">
+            </label>
+            <label>
+              Correo electrónico
+              <input type="email" id="applicant-email" required placeholder="ana@ejemplo.com" autocomplete="email">
+            </label>
+          </div>
+
+          <div class="form-columns">
+            <label>
+              WhatsApp / Teléfono de contacto
+              <input type="tel" id="applicant-phone" required placeholder="Ej. +52 81 1234 5678" autocomplete="tel">
+            </label>
+            <label>
+              Universidad o Institución (opcional)
+              <input type="text" id="applicant-school" placeholder="Ej. Tec de Monterrey, UNAM, UANL...">
+            </label>
+          </div>
+
+          <div class="form-columns">
+            <label>
+              ¿Buscas acreditar horas de servicio social?
+              <select id="applicant-social-service">
+                <option value="si">Sí, requiero constancia para mi universidad</option>
+                <option value="no" selected>No, participo por convicción personal</option>
+              </select>
+            </label>
+            <label>
+              Edad
+              <input type="number" id="applicant-age" min="16" max="99" value="21" required>
+            </label>
+          </div>
+
+          <label>
+            ¿Por qué te gustaría participar en esta actividad? <span class="optional">(breve motivación)</span>
+            <textarea id="motivation" maxlength="500" placeholder="Cuéntale a la organización qué te motiva a sumar tus manos a esta causa..." rows="3"></textarea>
+          </label>
+
+          <label>
+            Alergias o consideraciones médicas especiales <span class="optional">(opcional)</span>
+            <input type="text" id="applicant-medical" placeholder="Ej. Ninguna / Alergia al polen / Asma">
+          </label>
+
+          <label class="check-box">
+            <input id="apply-consent" type="checkbox" required>
+            <span>Me comprometo a asistir con puntualidad y a cumplir los lineamientos de seguridad y convivencia de la organización. Incluye seguro de voluntario.</span>
+          </label>
+
+          <button class="button primary full" type="submit">
+            Confirmar mi Postulación <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 3. Volunteer Pass Modal (After Application Success) -->
+  <dialog id="pass-dialog" class="form-dialog pass-dialog" aria-labelledby="pass-title">
+    <button class="close-button" data-close="pass-dialog" aria-label="Cerrar pase" type="button">×</button>
+    <div class="dialog-padding">
+      <div class="success-banner">
+        <span class="success-icon">🎉</span>
+        <h2 id="pass-title">¡Estás dentro! Tu lugar está reservado.</h2>
+        <p class="dialog-subtitle">Hemos registrado tu postulación con éxito. La organización ha recibido tus datos y te esperamos con entusiasmo.</p>
+      </div>
+
+      <div class="ticket-card" id="ticket-card-content">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="ticket-actions">
+        <button class="button primary" id="ticket-calendar-btn" type="button">
+          <span data-icon="calendar"></span> Agregar a Google Calendar
+        </button>
+        <button class="button secondary" id="ticket-whatsapp-btn" type="button">
+          <span data-icon="message-circle"></span> Contactar Coordinador (WhatsApp)
+        </button>
+        <button class="button" id="ticket-print-btn" type="button">
+          <span data-icon="printer"></span> Imprimir Pase
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 4. Official Certificate Modal -->
+  <dialog id="certificate-dialog" class="certificate-dialog" aria-labelledby="cert-dialog-title">
+    <button class="close-button" data-close="certificate-dialog" aria-label="Cerrar certificado" type="button">×</button>
+    <div class="cert-dialog-inner">
+      <div class="official-certificate-sheet" id="official-cert-sheet">
+        <div class="cert-border">
+          <div class="cert-watermark" aria-hidden="true">SUMA</div>
+          <div class="cert-top-row">
+            <div class="cert-logo-box">
+              <span class="cert-brand-star">✳</span>
+              <span class="cert-brand-name">SUMA</span>
+              <small>RED DE IMPACTO SOCIAL & VOLUNTARIADO</small>
+            </div>
+            <div class="cert-qr-box" id="cert-qr-target">
+              <!-- QR generated by JS -->
+            </div>
+          </div>
+
+          <div class="cert-title-block">
+            <span class="cert-super-title">REPÚBLICA MEXICANA · COMISIÓN DE VOLUNTARIADO CIUDADANO</span>
+            <h1 id="cert-dialog-title">CONSTANCIA OFICIAL DE SERVICIO Y PARTICIPACIÓN</h1>
+            <p class="cert-subtitle">Por medio de la presente, la red institucional SUMA en alianza con la organización anfitriona hace constar que:</p>
+          </div>
+
+          <div class="cert-student-block">
+            <h2 id="cert-full-name">Pablo Velázquez Bremont</h2>
+            <div class="cert-student-line"></div>
+            <p id="cert-institution-label">Institución Educativa: <strong>Universidad / Participante Comunitario</strong></p>
+          </div>
+
+          <p class="cert-body-paragraph">
+            Ha participado con compromiso, ética y dedicación en las jornadas comunitarias de impacto social y ambiental, acumulando satisfactoriamente un total de:
+          </p>
+
+          <div class="cert-hours-stamp">
+            <span class="hours-number" id="cert-total-hours">12</span>
+            <span class="hours-label">HORAS DE VOLUNTARIADO ACREDITADAS</span>
+          </div>
+
+          <div class="cert-activities-summary" id="cert-activities-breakdown">
+            <!-- Injected by JS -->
+          </div>
+
+          <div class="cert-signatures-row">
+            <div class="signature-box">
+              <div class="signature-line">
+                <svg viewBox="0 0 160 50" class="digital-sig"><path d="M10 35 Q 40 10, 70 30 T 130 20 T 150 35" fill="none" stroke="#1d4e38" stroke-width="2"/></svg>
+              </div>
+              <strong>Lic. Sofía Alarcón Medina</strong>
+              <small>Dirección de Impacto Comunitario · SUMA</small>
+            </div>
+
+            <div class="signature-seal">
+              <div class="golden-seal">
+                <span>★ OFICIAL ★</span>
+                <strong>SUMA</strong>
+                <small>2026</small>
+              </div>
+            </div>
+
+            <div class="signature-box">
+              <div class="signature-line">
+                <svg viewBox="0 0 160 50" class="digital-sig"><path d="M15 25 Q 50 40, 80 15 T 120 35 T 145 20" fill="none" stroke="#1d4e38" stroke-width="2"/></svg>
+              </div>
+              <strong id="cert-org-representative">Ing. Fernando Torres Gil</strong>
+              <small>Coordinador General de Operaciones de Campo</small>
+            </div>
+          </div>
+
+          <div class="cert-footer-meta">
+            <span>FOLIO DE SEGURIDAD DIGITAL: <strong id="cert-security-folio">SUMA-MX-2026-9842</strong></span>
+            <span>VERIFICACIÓN EN LÍNEA: <strong>https://suma-voluntariado.vercel.app</strong></span>
+            <span>FECHA DE EMISIÓN: <strong id="cert-issue-date">22 de Octubre de 2026</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-action-bar">
+        <button class="button primary" id="print-official-cert-btn" type="button">
+          <span data-icon="printer"></span> Imprimir / Guardar en PDF
+        </button>
+        <button class="button" data-close="certificate-dialog" type="button">Cerrar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 5. Publish New Opportunity Modal (For Organizations) -->
+  <dialog id="publish-dialog" class="form-dialog publish-dialog" aria-labelledby="publish-title">
+    <button class="close-button" data-close="publish-dialog" aria-label="Cerrar formulario" type="button">×</button>
+    <div class="dialog-padding">
+      <span class="pill soft">NUEVA CONVOCATORIA DE VOLUNTARIADO</span>
+      <h2 id="publish-title">Invita a sumar voluntades</h2>
+      <p class="dialog-subtitle">Crea una actividad atractiva para convocar a personas apasionadas en tu ciudad.</p>
+
+      <form id="publish-form">
+        <label>
+          Título de la actividad
+          <input name="title" required maxlength="85" placeholder="Ej. Reforestación comunitaria en el parque central">
+        </label>
+
+        <label>
+          Nombre de tu Organización o Colectivo
+          <input name="org" required maxlength="60" placeholder="Ej. Guardianes del Bosque A.C.">
+        </label>
+
+        <div class="form-columns">
+          <label>
+            Causa principal
+            <select name="category" required>
+              <option value="Medio Ambiente">🌿 Medio Ambiente</option>
+              <option value="Comunidad y Alimentos">🍲 Comunidad y Alimentos</option>
+              <option value="Educación y Mentoría">📚 Educación y Mentoría</option>
+              <option value="Bienestar Animal">🐾 Bienestar Animal</option>
+              <option value="Salud & Bienestar">🏥 Salud & Bienestar</option>
+              <option value="Arte, Cultura & Espacios">🎨 Arte, Cultura & Espacios</option>
+              <option value="Tecnología & Inclusión">💻 Tecnología & Inclusión</option>
+            </select>
+          </label>
+
+          <label>
+            Modalidad
+            <select name="mode" id="publish-mode">
+              <option value="Presencial">Presencial en campo</option>
+              <option value="En línea">En línea / Remoto</option>
+              <option value="Híbrido">Híbrido</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-columns">
+          <label>
+            Ciudad o Destino
+            <select name="city" id="publish-city">
+              <option value="Monterrey, NL">Monterrey, NL</option>
+              <option value="San Pedro Garza García, NL">San Pedro Garza García, NL</option>
+              <option value="Guadalupe, NL">Guadalupe, NL</option>
+              <option value="Santa Catarina, NL">Santa Catarina, NL</option>
+              <option value="Ciudad de México">Ciudad de México (CDMX)</option>
+              <option value="Guadalajara, Jalisco">Guadalajara, Jalisco</option>
+              <option value="Puebla, México">Puebla, México</option>
+              <option value="Oaxaca, México">Oaxaca, México</option>
+              <option value="Cusco, Perú">Cusco, Perú</option>
+              <option value="Quito, Ecuador">Quito, Ecuador</option>
+              <option value="Lisboa, Portugal">Lisboa, Portugal</option>
+            </select>
+          </label>
+
+          <label>
+            Punto de encuentro / Dirección exacta
+            <input name="address" required placeholder="Ej. Entrada principal del Parque La Pastora">
+          </label>
+        </div>
+
+        <div class="form-columns three">
+          <label>
+            Fecha de la jornada
+            <input type="date" name="date" id="publish-date" required>
+          </label>
+          <label>
+            Hora de inicio
+            <input name="time" type="time" value="09:00" required>
+          </label>
+          <label>
+            Duración (horas)
+            <input name="hours" type="number" min="1" max="10" value="4" required>
+          </label>
+        </div>
+
+        <div class="form-columns">
+          <label>
+            Cupos totales de voluntarios
+            <input name="spots" type="number" min="1" max="200" value="15" required>
+          </label>
+          <label>
+            WhatsApp del coordinador/a
+            <input name="coordinatorPhone" placeholder="+52 81 8888 9999" value="+528188889999">
+          </label>
+        </div>
+
+        <label>
+          ¿Qué harán los voluntarios? (Descripción detallada e impacto)
+          <textarea name="description" required maxlength="800" rows="3" placeholder="Describe el objetivo de la jornada, las tareas a realizar y el impacto positivo que lograremos juntos..."></textarea>
+        </label>
+
+        <label>
+          ¿Qué deben llevar los voluntarios? (Requisitos y sugerencias)
+          <input name="requirements" required maxlength="300" placeholder="Ej. Ropa cómoda, zapatos cerrados, gorra, termo de agua y bloqueador solar.">
+        </label>
+
+        <label>
+          ¿Qué incluye la actividad? (Beneficios para el voluntario)
+          <input name="included" maxlength="300" placeholder="Ej. Seguro de voluntario, herramientas, hidratación, refrigerio y constancia oficial." value="Seguro de accidentes, hidratación, herramientas y constancia de horas oficial.">
+        </label>
+
+        <div class="form-columns">
+          <label class="checkbox-label">
+            <input type="checkbox" name="socialServiceValid" checked>
+            <span>Válido para Acreditación de Servicio Social</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="noExperienceNeeded" checked>
+            <span>Apto para principiantes sin experiencia previa</span>
+          </label>
+        </div>
+
+        <button class="button primary full" type="submit">
+          Publicar Convocatoria en SUMA
+        </button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 6. Manage Applicants Dialog (For Organizations) -->
+  <dialog id="manage-applicants-dialog" class="form-dialog publish-dialog" aria-labelledby="manage-title">
+    <button class="close-button" data-close="manage-applicants-dialog" aria-label="Cerrar postulantes" type="button">×</button>
+    <div class="dialog-padding">
+      <span class="pill soft">CONTROL DE ASISTENCIA Y POSTULANTES</span>
+      <h2 id="manage-title">Postulantes registrados</h2>
+      <p id="manage-subtitle" class="dialog-subtitle">Revisa a los voluntarios inscritos y actualiza su estado de participación.</p>
+
+      <div id="applicants-list-container" class="applicants-list-container">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 7. Edit Profile Dialog -->
+  <dialog id="edit-profile-dialog" class="form-dialog" aria-labelledby="edit-profile-title">
+    <button class="close-button" data-close="edit-profile-dialog" aria-label="Cerrar edición" type="button">×</button>
+    <div class="dialog-padding">
+      <span class="pill soft">PERFIL DE VOLUNTARIO</span>
+      <h2 id="edit-profile-title">Editar información</h2>
+      <form id="edit-profile-form">
+        <label>
+          Nombre completo
+          <input type="text" id="edit-name" required>
+        </label>
+        <label>
+          Correo electrónico
+          <input type="email" id="edit-email" required>
+        </label>
+        <label>
+          Universidad o Institución
+          <input type="text" id="edit-institution" placeholder="Ej. Tec de Monterrey, UNAM...">
+        </label>
+        <label>
+          Ciudad de residencia
+          <input type="text" id="edit-city" placeholder="Ej. Monterrey, NL">
+        </label>
+        <button class="button primary full" type="submit">Guardar Cambios</button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 8. FAQ & University Accreditation Dialog -->
+  <dialog id="faq-dialog" class="form-dialog" aria-labelledby="faq-title">
+    <button class="close-button" data-close="faq-dialog" aria-label="Cerrar preguntas" type="button">×</button>
+    <div class="dialog-padding">
+      <span class="pill soft">INFORMACIÓN Y SEGURIDAD</span>
+      <h2 id="faq-title">Preguntas Frecuentes y Acreditación</h2>
+
+      <div class="faq-accordion">
+        <details class="faq-item" open>
+          <summary>¿Cómo valido las horas para mi Servicio Social Universitario?</summary>
+          <p>Al concluir cualquier jornada, la organización valida tu asistencia en la plataforma. Tu constancia oficial con membrete, código QR y firma digital se genera automáticamente en la sección <strong>Mi Camino</strong>, lista para entregarse en la dirección de servicio social de tu universidad.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Qué cobertura tiene el Seguro de Voluntario?</summary>
+          <p>Todas las jornadas presenciales avaladas por SUMA cuentan con una póliza colectiva de accidentes personales y primeros auxilios para proteger a los voluntarios durante el trayecto y la realización de la actividad.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Tiene algún costo participar como voluntario?</summary>
+          <p>No. En SUMA todas las oportunidades de voluntariado son 100% gratuitas. Las organizaciones cubren materiales, equipo de seguridad y refrigerios.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Cómo verifican a las organizaciones?</summary>
+          <p>Cada organización registrada pasa por una revisión documental de su acta constitutiva o registro civil, antecedentes comunitarios y protocolos de seguridad para voluntarios antes de publicar causas en la red.</p>
+        </details>
+      </div>
+
+      <button class="button primary full" type="button" data-close="faq-dialog">Entendido</button>
+    </div>
+  </dialog>
+
+  <!-- Toast Notification Container -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Confetti Canvas for Festive Celebrations -->
+  <canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
+</body>
+</html>
