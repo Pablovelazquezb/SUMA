@@ -1464,7 +1464,6 @@ function renderPublishedActivities() {
 function renderAll() {
   renderCategoryPills();
   renderExploreGrid();
-  renderMapView();
   renderCalendarView();
   renderSavedView();
   renderActivityDashboard();
@@ -1823,8 +1822,14 @@ function resetFilters() {
 // --- 9. ROUTING (Hash-based) ---
 function handleRouting() {
   const hash = location.hash.slice(1).toLowerCase() || 'explorar';
-  const allowed = ['explorar', 'mapa', 'guardados', 'actividad', 'organizaciones'];
+  const allowed = ['explorar', 'guardados', 'actividad', 'organizaciones'];
   activeView = allowed.includes(hash) ? hash : 'explorar';
+
+  // If user navigated to #mapa, redirect hash to #explorar
+  if (hash === 'mapa') {
+    location.hash = '#explorar';
+    return;
+  }
 
   // Toggle view visibility
   $$('[data-view]').forEach(section => {
@@ -1848,13 +1853,6 @@ function handleRouting() {
   // Mobile menu close
   const nav = $('#main-nav');
   renderAll();
-
-  if (activeView === 'mapa') {
-    setTimeout(() => {
-      initOrUpdateMap('full-interactive-map', false);
-      if (fullMapInstance) fullMapInstance.invalidateSize();
-    }, 120);
-  }
 }
 
 // --- 10. EVENT LISTENERS & INITIALIZATION ---
@@ -1926,7 +1924,7 @@ function initEventListeners() {
       return;
     }
 
-    // View mode switcher button (grid / map / calendar)
+    // View mode switcher button (grid / calendar)
     const viewBtn = target.closest('[data-view-mode]');
     if (viewBtn) {
       event.preventDefault();
@@ -1934,67 +1932,13 @@ function initEventListeners() {
       $$('[data-view-mode]').forEach(b => b.classList.toggle('active', b === viewBtn));
       
       const grid = $('#opportunity-grid');
-      const map = $('#map-view-container');
       const cal = $('#calendar-view-container');
 
       if (grid) grid.hidden = mode !== 'grid';
-      if (map) map.hidden = mode !== 'map';
       if (cal) cal.hidden = mode !== 'calendar';
 
-      if (mode === 'map') {
-        setTimeout(() => {
-          initOrUpdateMap('interactive-map', true);
-          if (exploreMapInstance) {
-            exploreMapInstance.invalidateSize();
-          }
-        }, 80);
-      } else if (mode === 'calendar') {
+      if (mode === 'calendar') {
         renderCalendarView();
-      }
-      return;
-    }
-
-    // Map focus chip (Dedicated Map View: #map-view)
-    const mapFocusBtn = target.closest('[data-map-focus]');
-    if (mapFocusBtn) {
-      event.preventDefault();
-      const focusKey = mapFocusBtn.dataset.mapFocus;
-      $$('[data-map-focus]').forEach(b => b.classList.toggle('active', b === mapFocusBtn));
-      const preset = CITY_PRESETS[focusKey];
-      if (preset && fullMapInstance) {
-        fullMapInstance.flyTo(preset.center, preset.zoom, { duration: 1.2 });
-      }
-      return;
-    }
-
-    // Explore inline map focus chip (Explore View: #map-view-container)
-    const exploreFocusBtn = target.closest('[data-explore-map-focus]');
-    if (exploreFocusBtn) {
-      event.preventDefault();
-      const focusKey = exploreFocusBtn.dataset.exploreMapFocus;
-      $$('[data-explore-map-focus]').forEach(b => b.classList.toggle('active', b === exploreFocusBtn));
-      const preset = CITY_PRESETS[focusKey];
-      if (preset && exploreMapInstance) {
-        exploreMapInstance.flyTo(preset.center, preset.zoom, { duration: 1.2 });
-      }
-      return;
-    }
-
-    // Map Sidebar Card click: focus on marker and open popup
-    const focusActCard = target.closest('[data-focus-act]');
-    if (focusActCard && !target.closest('button')) {
-      event.preventDefault();
-      const actId = focusActCard.dataset.focusAct;
-      $$('.map-sidebar-card').forEach(c => c.classList.toggle('selected', c === focusActCard));
-      const activity = getAllActivities().find(a => a.id === actId);
-      if (activity && fullMapInstance) {
-        fullMapInstance.flyTo([activity.lat, activity.lng], 13, { duration: 1.0 });
-        const marker = fullMapMarkers[actId];
-        if (marker) {
-          setTimeout(() => {
-            marker.openPopup();
-          }, 350);
-        }
       }
       return;
     }
@@ -2349,12 +2293,6 @@ function initEventListeners() {
 
   // Listen to hash change for SPA navigation
   window.addEventListener('hashchange', handleRouting);
-
-  // Resize handler for maps
-  window.addEventListener('resize', () => {
-    if (fullMapInstance) fullMapInstance.invalidateSize();
-    if (exploreMapInstance) exploreMapInstance.invalidateSize();
-  });
 }
 
 // --- 11. BOOTSTRAP APPLICATION ---

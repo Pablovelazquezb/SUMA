@@ -11,10 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Leaflet Map Styles and Script (Local + Offline Capable) -->
-  <link rel="stylesheet" href="leaflet.css">
   <link rel="stylesheet" href="style.css">
-  <script defer src="leaflet.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -47,10 +44,6 @@
         <a href="#explorar" data-nav="explorar">
           <span class="nav-icon" data-icon="compass"></span>
           <span>Explorar</span>
-        </a>
-        <a href="#mapa" data-nav="mapa">
-          <span class="nav-icon" data-icon="map"></span>
-          <span>Mapa</span>
         </a>
         <a href="#guardados" data-nav="guardados">
           <span class="nav-icon" data-icon="heart"></span>
@@ -235,9 +228,6 @@
               <button class="view-btn active" type="button" data-view-mode="grid" aria-pressed="true" title="Vista cuadrícula">
                 <span data-icon="grid"></span> Tarjetas
               </button>
-              <button class="view-btn" type="button" data-view-mode="map" aria-pressed="false" title="Vista mapa">
-                <span data-icon="map"></span> Mapa
-              </button>
               <button class="view-btn" type="button" data-view-mode="calendar" aria-pressed="false" title="Vista agenda de fechas">
                 <span data-icon="calendar"></span> Fechas
               </button>
@@ -318,29 +308,7 @@
         <!-- Rendered by JS -->
       </div>
 
-      <!-- VIEW 2: Interactive Real Map View inside Explore -->
-      <div id="map-view-container" class="map-view-container" hidden>
-        <div class="map-wrapper">
-          <div class="map-header">
-            <div>
-              <h3><span data-icon="pin"></span> Mapa Interactivo de Impacto</h3>
-              <p>Explora las causas activas en tu ciudad con coordenadas exactas e información en tiempo real.</p>
-            </div>
-            <div class="map-city-chips">
-              <button type="button" class="city-chip active" data-explore-map-focus="mexico">🇲🇽 México</button>
-              <button type="button" class="city-chip" data-explore-map-focus="monterrey">⛰️ Monterrey</button>
-              <button type="button" class="city-chip" data-explore-map-focus="cdmx">🏛️ CDMX</button>
-              <button type="button" class="city-chip" data-explore-map-focus="guadalajara">🌸 Guadalajara</button>
-              <button type="button" class="city-chip" data-explore-map-focus="latam-eu">🌎 Internacional</button>
-            </div>
-          </div>
-          <div id="interactive-map" class="interactive-map-area">
-            <!-- Real Leaflet interactive map with pins -->
-          </div>
-        </div>
-      </div>
-
-      <!-- VIEW 3: Interactive Calendar View -->
+      <!-- VIEW 2: Interactive Calendar View -->
       <div id="calendar-view-container" class="calendar-view-container" hidden>
         <div class="calendar-wrapper">
           <div class="calendar-header">
@@ -459,43 +427,7 @@
       </section>
     </section>
 
-    <!-- 2. MAPA VIEW (Dedicated Full Screen Map & Regional Explorer) -->
-    <section id="map-view" data-view="mapa" hidden>
-      <div class="page-intro">
-        <span class="eyebrow-small">EXPLORACIÓN GEOGRÁFICA</span>
-        <h1>Mapa de Causas de Impacto</h1>
-        <p>Encuentra voluntariados activos en tu vecindario, en tu ciudad o en proyectos internacionales de intercambio social.</p>
-        
-        <div class="map-city-chips" style="margin-top: 18px;">
-          <button type="button" class="city-chip active" data-map-focus="mexico">🇲🇽 Todo México</button>
-          <button type="button" class="city-chip" data-map-focus="monterrey">⛰️ Monterrey y Zona Metro</button>
-          <button type="button" class="city-chip" data-map-focus="cdmx">🏛️ CDMX</button>
-          <button type="button" class="city-chip" data-map-focus="guadalajara">🌸 Guadalajara</button>
-          <button type="button" class="city-chip" data-map-focus="puebla-oaxaca">🌄 Puebla & Oaxaca</button>
-          <button type="button" class="city-chip" data-map-focus="latam-eu">🌎 Internacional</button>
-        </div>
-      </div>
-
-      <div class="full-map-layout">
-        <!-- Sidebar with causes list -->
-        <aside class="map-sidebar">
-          <div class="map-sidebar-header">
-            <h3 id="map-sidebar-title">Causas en esta región</h3>
-            <span class="badge-count" id="map-sidebar-count">0</span>
-          </div>
-          <div class="map-sidebar-list" id="map-sidebar-list">
-            <!-- Populated by JS -->
-          </div>
-        </aside>
-
-        <!-- Leaflet Map Container -->
-        <div class="full-map-canvas-wrap">
-          <div id="full-interactive-map" class="full-map-area"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. GUARDADOS VIEW -->
+    <!-- 2. GUARDADOS VIEW -->
     <section id="saved-view" data-view="guardados" hidden>
       <div class="page-intro">
         <span class="eyebrow-small">TU LISTA DE INTERÉS</span>
@@ -727,7 +659,7 @@
         <h4>Explorar</h4>
         <ul>
           <li><a href="#explorar">Todas las causas</a></li>
-          <li><a href="#mapa">Mapa de actividades</a></li>
+          <li><a href="#explorar">Jornadas próximas</a></li>
           <li><a href="#explorar" data-quick-category="Medio Ambiente">Medio Ambiente</a></li>
           <li><a href="#explorar" data-quick-category="Educación y Mentoría">Educación</a></li>
           <li><a href="#explorar" data-quick-category="Bienestar Animal">Bienestar Animal</a></li>
