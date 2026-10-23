@@ -10,7 +10,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet Map Styles and Script (Local + Offline Capable) -->
+  <link rel="stylesheet" href="leaflet.css">
   <link rel="stylesheet" href="style.css">
+  <script defer src="leaflet.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -133,7 +137,7 @@
               <span class="pill spots-pill">Quedan 6 lugares</span>
             </div>
             <h3 id="hero-card-title">Reforestación y Restauración Ecológica en La Huasteca</h3>
-            <p class="hero-card-org"><span data-icon="check-circle" class="verified-icon"></span> Pronatura Noreste · Monterrey, NL</p>
+            <p class="hero-card-org"><span data-icon="check-circle" class="verified-icon"></span> Pronatura Noreste · Santa Catarina, NL</p>
             <div class="hero-card-meta">
               <span><span data-icon="calendar"></span> Este sábado · 08:30 h</span>
               <span><span data-icon="clock"></span> 4 horas de servicio</span>
@@ -314,23 +318,29 @@
         <!-- Rendered by JS -->
       </div>
 
-      <!-- VIEW 2: Interactive Map View (Hidden by default, shown when view-mode is map) -->
+      <!-- VIEW 2: Interactive Real Map View inside Explore -->
       <div id="map-view-container" class="map-view-container" hidden>
         <div class="map-wrapper">
           <div class="map-header">
-            <h3><span data-icon="pin"></span> Mapa Interactivo de Impacto</h3>
-            <p>Selecciona una ubicación para explorar las causas comunitarias activas en esa región.</p>
+            <div>
+              <h3><span data-icon="pin"></span> Mapa Interactivo de Impacto</h3>
+              <p>Explora las causas activas en tu ciudad con coordenadas exactas e información en tiempo real.</p>
+            </div>
+            <div class="map-city-chips">
+              <button type="button" class="city-chip active" data-explore-map-focus="mexico">🇲🇽 México</button>
+              <button type="button" class="city-chip" data-explore-map-focus="monterrey">⛰️ Monterrey</button>
+              <button type="button" class="city-chip" data-explore-map-focus="cdmx">🏛️ CDMX</button>
+              <button type="button" class="city-chip" data-explore-map-focus="guadalajara">🌸 Guadalajara</button>
+              <button type="button" class="city-chip" data-explore-map-focus="latam-eu">🌎 Internacional</button>
+            </div>
           </div>
           <div id="interactive-map" class="interactive-map-area">
-            <!-- Vector interactive map rendered by JS -->
-          </div>
-          <div id="map-preview-card" class="map-preview-card" hidden>
-            <!-- Map selected card preview -->
+            <!-- Real Leaflet interactive map with pins -->
           </div>
         </div>
       </div>
 
-      <!-- VIEW 3: Interactive Calendar View (Hidden by default, shown when view-mode is calendar) -->
+      <!-- VIEW 3: Interactive Calendar View -->
       <div id="calendar-view-container" class="calendar-view-container" hidden>
         <div class="calendar-wrapper">
           <div class="calendar-header">
@@ -449,15 +459,39 @@
       </section>
     </section>
 
-    <!-- 2. MAPA VIEW (Full screen map) -->
+    <!-- 2. MAPA VIEW (Dedicated Full Screen Map & Regional Explorer) -->
     <section id="map-view" data-view="mapa" hidden>
       <div class="page-intro">
         <span class="eyebrow-small">EXPLORACIÓN GEOGRÁFICA</span>
         <h1>Mapa de Causas de Impacto</h1>
         <p>Encuentra voluntariados activos en tu vecindario, en tu ciudad o en proyectos internacionales de intercambio social.</p>
+        
+        <div class="map-city-chips" style="margin-top: 18px;">
+          <button type="button" class="city-chip active" data-map-focus="mexico">🇲🇽 Todo México</button>
+          <button type="button" class="city-chip" data-map-focus="monterrey">⛰️ Monterrey y Zona Metro</button>
+          <button type="button" class="city-chip" data-map-focus="cdmx">🏛️ CDMX</button>
+          <button type="button" class="city-chip" data-map-focus="guadalajara">🌸 Guadalajara</button>
+          <button type="button" class="city-chip" data-map-focus="puebla-oaxaca">🌄 Puebla & Oaxaca</button>
+          <button type="button" class="city-chip" data-map-focus="latam-eu">🌎 Internacional</button>
+        </div>
       </div>
-      <div class="full-map-container" id="full-map-wrapper">
-        <!-- Rendered by JS -->
+
+      <div class="full-map-layout">
+        <!-- Sidebar with causes list -->
+        <aside class="map-sidebar">
+          <div class="map-sidebar-header">
+            <h3 id="map-sidebar-title">Causas en esta región</h3>
+            <span class="badge-count" id="map-sidebar-count">0</span>
+          </div>
+          <div class="map-sidebar-list" id="map-sidebar-list">
+            <!-- Populated by JS -->
+          </div>
+        </aside>
+
+        <!-- Leaflet Map Container -->
+        <div class="full-map-canvas-wrap">
+          <div id="full-interactive-map" class="full-map-area"></div>
+        </div>
       </div>
     </section>
 
@@ -923,7 +957,7 @@
 
           <div class="cert-footer-meta">
             <span>FOLIO DE SEGURIDAD DIGITAL: <strong id="cert-security-folio">SUMA-MX-2026-9842</strong></span>
-            <span>VERIFICACIÓN EN LÍNEA: <strong>https://suma-voluntariado.vercel.app</strong></span>
+            <span>VERIFICACIÓN EN LÍNEA: <strong>https://suma-gold.vercel.app</strong></span>
             <span>FECHA DE EMISIÓN: <strong id="cert-issue-date">22 de Octubre de 2026</strong></span>
           </div>
         </div>

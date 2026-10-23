@@ -1020,45 +1020,228 @@ function renderExploreGrid() {
   grid.innerHTML = activities.map(renderCardHTML).join('');
 }
 
-// Render Interactive Map View
-function renderMapView() {
-  const mapArea = $('#interactive-map');
-  const fullMap = $('#full-map-wrapper');
-  const activities = getAllActivities();
+// --- LEAFLET MAP ENGINE ---
+let exploreMapInstance = null;
+let fullMapInstance = null;
+let exploreMarkersLayer = null;
+let fullMarkersLayer = null;
+let exploreMapMarkers = {};
+let fullMapMarkers = {};
 
-  const mapPinsHTML = activities.map((a, idx) => {
-    // Map coordinates normalization into SVG canvas
-    const x = ((a.lng + 105) * 8.5) + 80;
-    const y = ((32 - a.lat) * 16) + 40;
-    const clampedX = Math.max(40, Math.min(680, x));
-    const clampedY = Math.max(40, Math.min(380, y));
+const CITY_PRESETS = {
+  mexico: { center: [23.6345, -102.5528], zoom: 5 },
+  monterrey: { center: [25.6650, -100.3500], zoom: 11 },
+  cdmx: { center: [19.4100, -99.1100], zoom: 12 },
+  guadalajara: { center: [20.6900, -103.3700], zoom: 12 },
+  'puebla-oaxaca': { center: [18.0000, -97.5000], zoom: 7 },
+  'latam-eu': { center: [18.0000, -45.0000], zoom: 3 }
+};
 
-    return `
-      <g class="map-pin" data-open="${esc(a.id)}" transform="translate(${clampedX}, ${clampedY})">
-        <circle cx="0" cy="0" r="14" fill="#2ecc71" opacity="0.3" class="map-pin-pulse"/>
-        <circle cx="0" cy="0" r="8" fill="#123d2b" stroke="#ffffff" stroke-width="2"/>
-        <text x="12" y="4" font-size="11" font-weight="700" fill="#123d2b" class="map-label">${esc(a.city.split(',')[0])}</text>
-      </g>
-    `;
-  }).join('');
+const CATEGORY_COLORS = {
+  'Medio Ambiente': '#1fa463',
+  'Comunidad y Alimentos': '#f59e0b',
+  'Educación y Mentoría': '#3b82f6',
+  'Bienestar Animal': '#8b5cf6',
+  'Salud & Bienestar': '#ef4444',
+  'Arte, Cultura & Espacios': '#f97316',
+  'Tecnología & Inclusión': '#06b6d4'
+};
 
-  const svgContent = `
-    <svg class="map-svg" viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="grid-pattern" r="50%">
-          <stop offset="0%" stop-color="#1b4d37" stop-opacity="0.08"/>
-          <stop offset="100%" stop-color="#1b4d37" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
-      <!-- Stylized continent curves -->
-      <path d="M60 90 Q 200 60, 320 110 T 560 90 T 700 130 Q 640 280, 500 320 T 260 380 Q 100 340, 60 90 Z" fill="#dceade" opacity="0.8"/>
-      <path d="M140 130 Q 280 120, 380 170 T 480 340 T 240 330 Z" fill="#cfe1d2"/>
-      ${mapPinsHTML}
-    </svg>
+const CATEGORY_EMOJIS = {
+  'Medio Ambiente': '🌿',
+  'Comunidad y Alimentos': '🍲',
+  'Educación y Mentoría': '📚',
+  'Bienestar Animal': '🐾',
+  'Salud & Bienestar': '🏥',
+  'Arte, Cultura & Espacios': '🎨',
+  'Tecnología & Inclusión': '💻'
+};
+
+function createCustomMarkerIcon(category) {
+  const color = CATEGORY_COLORS[category] || '#1fa463';
+  const emoji = CATEGORY_EMOJIS[category] || '✳';
+  return L.divIcon({
+    className: 'custom-map-marker',
+    html: `
+      <div class="map-marker-pin" style="background: ${color};">
+        <span class="marker-icon">${emoji}</span>
+      </div>
+      <div class="marker-pulse" style="background: ${color};"></div>
+    `,
+    iconSize: [38, 38],
+    iconAnchor: [19, 38],
+    popupAnchor: [0, -38]
+  });
+}
+
+function createPopupHTML(activity) {
+  const spotsLeft = Math.max(0, activity.spotsTotal - activity.spotsFilled);
+  return `
+    <div class="map-popup-card">
+      <span class="map-popup-badge">${esc(activity.category)}</span>
+      <div class="map-popup-title">${esc(activity.title)}</div>
+      <div class="map-popup-org">${esc(activity.org)} · ${esc(activity.city)}</div>
+      <div class="map-popup-meta">
+        <span>📅 <strong>${formatDate(activity.date)}</strong> · ${esc(activity.time)} h</span>
+        <span>⏱️ <strong>${activity.hours} horas</strong> de servicio</span>
+        <span>📍 ${esc(activity.address)}</span>
+        <span>👥 Quedan ${spotsLeft} de ${activity.spotsTotal} lugares</span>
+      </div>
+      <button class="button small-button primary full" type="button" data-open="${esc(activity.id)}">
+        Ver Detalles y Postularme →
+      </button>
+    </div>
   `;
+}
 
-  if (mapArea) mapArea.innerHTML = svgContent;
-  if (fullMap) fullMap.innerHTML = svgContent;
+function renderMapSidebar(activities) {
+  const listEl = $('#map-sidebar-list');
+  const countEl = $('#map-sidebar-count');
+  if (!listEl) return;
+
+  const validActivities = activities.filter(a => a.mode !== 'En línea' && Number.isFinite(a.lat));
+  if (countEl) countEl.textContent = validActivities.length;
+
+  if (validActivities.length === 0) {
+    listEl.innerHTML = `
+      <div class="empty-state" style="padding: 20px;">
+        <p style="font-size: 13px;">No hay causas presenciales registradas en esta selección.</p>
+      </div>
+    `;
+    return;
+  }
+
+  listEl.innerHTML = validActivities.map(a => `
+    <div class="map-sidebar-card" data-focus-act="${esc(a.id)}">
+      <span class="map-sidebar-card-org">${esc(a.category)} · ${esc(a.org)}</span>
+      <h4>${esc(a.title)}</h4>
+      <div class="map-sidebar-card-meta">
+        <span>📍 ${esc(a.city.split(',')[0])}</span>
+        <span>📅 ${formatDate(a.date)}</span>
+        <span>⏰ ${a.hours}h</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function initOrUpdateMap(containerId, isExplore = false) {
+  const container = $(`#${containerId}`);
+  if (!container) return;
+
+  const activities = getAllActivities().filter(a => Number.isFinite(a.lat) && Number.isFinite(a.lng));
+
+  // Check if Leaflet L is available
+  if (typeof L === 'undefined') {
+    container.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:center;height:100%;background:var(--bg-subtle);color:var(--text-muted);padding:24px;text-align:center;">
+        <div>
+          <p style="font-size:16px;font-weight:700;margin-bottom:8px;">🗺️ Inicializando mapa interactivo...</p>
+          <p style="font-size:13px;">Si los mapas no cargan de inmediato, verifica tu conexión a internet o explora en la vista de tarjetas.</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  if (isExplore) {
+    if (!exploreMapInstance) {
+      exploreMapInstance = L.map(containerId, {
+        center: [23.6345, -102.5528],
+        zoom: 5,
+        scrollWheelZoom: false
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+      }).addTo(exploreMapInstance);
+
+      exploreMarkersLayer = L.layerGroup().addTo(exploreMapInstance);
+    }
+
+    if (exploreMarkersLayer) {
+      exploreMarkersLayer.clearLayers();
+      exploreMapMarkers = {};
+      activities.forEach(a => {
+        const marker = L.marker([a.lat, a.lng], { icon: createCustomMarkerIcon(a.category) });
+        marker.bindPopup(createPopupHTML(a));
+        exploreMarkersLayer.addLayer(marker);
+        exploreMapMarkers[a.id] = marker;
+      });
+    }
+
+    setTimeout(() => {
+      if (exploreMapInstance) exploreMapInstance.invalidateSize();
+    }, 120);
+    setTimeout(() => {
+      if (exploreMapInstance) exploreMapInstance.invalidateSize();
+    }, 350);
+
+  } else {
+    // Full map in #map-view
+    if (!fullMapInstance) {
+      fullMapInstance = L.map(containerId, {
+        center: [23.6345, -102.5528],
+        zoom: 5,
+        scrollWheelZoom: true
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+      }).addTo(fullMapInstance);
+
+      fullMarkersLayer = L.layerGroup().addTo(fullMapInstance);
+    }
+
+    if (fullMarkersLayer) {
+      fullMarkersLayer.clearLayers();
+      fullMapMarkers = {};
+      activities.forEach(a => {
+        const marker = L.marker([a.lat, a.lng], { icon: createCustomMarkerIcon(a.category) });
+        marker.bindPopup(createPopupHTML(a));
+
+        marker.on('click', () => {
+          $$('.map-sidebar-card').forEach(c => c.classList.toggle('selected', c.dataset.focusAct === a.id));
+          const targetCard = $(`[data-focus-act="${a.id}"]`);
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        });
+
+        fullMarkersLayer.addLayer(marker);
+        fullMapMarkers[a.id] = marker;
+      });
+    }
+
+    renderMapSidebar(activities);
+
+    setTimeout(() => {
+      if (fullMapInstance) fullMapInstance.invalidateSize();
+    }, 120);
+    setTimeout(() => {
+      if (fullMapInstance) fullMapInstance.invalidateSize();
+    }, 350);
+  }
+}
+
+function renderMapView() {
+  if (activeView === 'mapa') {
+    setTimeout(() => {
+      initOrUpdateMap('full-interactive-map', false);
+      if (fullMapInstance) fullMapInstance.invalidateSize();
+    }, 100);
+  } else {
+    const mapContainer = $('#map-view-container');
+    if (mapContainer && !mapContainer.hidden) {
+      setTimeout(() => {
+        initOrUpdateMap('interactive-map', true);
+        if (exploreMapInstance) exploreMapInstance.invalidateSize();
+      }, 100);
+    }
+  }
 }
 
 // Render Calendar View
@@ -1664,9 +1847,14 @@ function handleRouting() {
 
   // Mobile menu close
   const nav = $('#main-nav');
-  if (nav) nav.classList.remove('open');
-
   renderAll();
+
+  if (activeView === 'mapa') {
+    setTimeout(() => {
+      initOrUpdateMap('full-interactive-map', false);
+      if (fullMapInstance) fullMapInstance.invalidateSize();
+    }, 120);
+  }
 }
 
 // --- 10. EVENT LISTENERS & INITIALIZATION ---
@@ -1752,6 +1940,62 @@ function initEventListeners() {
       if (grid) grid.hidden = mode !== 'grid';
       if (map) map.hidden = mode !== 'map';
       if (cal) cal.hidden = mode !== 'calendar';
+
+      if (mode === 'map') {
+        setTimeout(() => {
+          initOrUpdateMap('interactive-map', true);
+          if (exploreMapInstance) {
+            exploreMapInstance.invalidateSize();
+          }
+        }, 80);
+      } else if (mode === 'calendar') {
+        renderCalendarView();
+      }
+      return;
+    }
+
+    // Map focus chip (Dedicated Map View: #map-view)
+    const mapFocusBtn = target.closest('[data-map-focus]');
+    if (mapFocusBtn) {
+      event.preventDefault();
+      const focusKey = mapFocusBtn.dataset.mapFocus;
+      $$('[data-map-focus]').forEach(b => b.classList.toggle('active', b === mapFocusBtn));
+      const preset = CITY_PRESETS[focusKey];
+      if (preset && fullMapInstance) {
+        fullMapInstance.flyTo(preset.center, preset.zoom, { duration: 1.2 });
+      }
+      return;
+    }
+
+    // Explore inline map focus chip (Explore View: #map-view-container)
+    const exploreFocusBtn = target.closest('[data-explore-map-focus]');
+    if (exploreFocusBtn) {
+      event.preventDefault();
+      const focusKey = exploreFocusBtn.dataset.exploreMapFocus;
+      $$('[data-explore-map-focus]').forEach(b => b.classList.toggle('active', b === exploreFocusBtn));
+      const preset = CITY_PRESETS[focusKey];
+      if (preset && exploreMapInstance) {
+        exploreMapInstance.flyTo(preset.center, preset.zoom, { duration: 1.2 });
+      }
+      return;
+    }
+
+    // Map Sidebar Card click: focus on marker and open popup
+    const focusActCard = target.closest('[data-focus-act]');
+    if (focusActCard && !target.closest('button')) {
+      event.preventDefault();
+      const actId = focusActCard.dataset.focusAct;
+      $$('.map-sidebar-card').forEach(c => c.classList.toggle('selected', c === focusActCard));
+      const activity = getAllActivities().find(a => a.id === actId);
+      if (activity && fullMapInstance) {
+        fullMapInstance.flyTo([activity.lat, activity.lng], 13, { duration: 1.0 });
+        const marker = fullMapMarkers[actId];
+        if (marker) {
+          setTimeout(() => {
+            marker.openPopup();
+          }, 350);
+        }
+      }
       return;
     }
 
@@ -2105,6 +2349,12 @@ function initEventListeners() {
 
   // Listen to hash change for SPA navigation
   window.addEventListener('hashchange', handleRouting);
+
+  // Resize handler for maps
+  window.addEventListener('resize', () => {
+    if (fullMapInstance) fullMapInstance.invalidateSize();
+    if (exploreMapInstance) exploreMapInstance.invalidateSize();
+  });
 }
 
 // --- 11. BOOTSTRAP APPLICATION ---
